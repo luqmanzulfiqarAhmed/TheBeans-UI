@@ -1,0 +1,16 @@
+<div class="botd-container" *ngIf="botd">
+    <mat-card (click)="viewDetails()" class="botd-card">
+      <mat-card-header>
+        <mat-card-title>Bean of the Day: {{ botd.Name }}</mat-card-title>
+      </mat-card-header>
+      <img mat-card-image [src]="botd.Image" alt="{{ botd.Name }}">
+      <mat-card-content>
+        <p>{{ botd.Description | slice:0:150 }}...</p>
+        <p><strong>Cost: </strong>{{ botd.Cost }}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="accent">Learn More</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  

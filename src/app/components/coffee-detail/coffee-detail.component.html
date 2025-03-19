@@ -1,0 +1,38 @@
+<div class="detail-container" *ngIf="bean">
+    <button mat-stroked-button class="back-button" routerLink="/beans">
+      <mat-icon>arrow_back</mat-icon>
+      Back to List
+    </button>
+  
+    <mat-card class="detail-card">
+      <img [src]="bean.Image" alt="{{ bean.Name }}" (error)="handleImageError($event)">
+      <mat-card-header>
+        <mat-card-title class="bean-title">{{ bean.Name }}</mat-card-title>
+        <mat-card-subtitle class="bean-subtitle">
+          {{ bean.Country }} - {{ bean.colour }}
+        </mat-card-subtitle>
+      </mat-card-header>
+  
+      <mat-card-content class="bean-content">
+        <div class="detail-item">
+          <h3>Price</h3>
+          <p>{{ bean.Cost  }}</p>
+        </div>
+  
+        <div class="detail-item">
+          <h3>Color</h3>
+          <p>{{ bean.colour }}</p>
+        </div>
+  
+        <div class="detail-item">
+          <h3>Origin</h3>
+          <p>{{ bean.Country }}</p>
+        </div>
+  
+        <div class="description-section">
+          <h2>Flavor Profile</h2>
+          <p class="bean-description">{{ bean.Description }}</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>

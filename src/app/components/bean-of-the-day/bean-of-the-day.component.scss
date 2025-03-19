@@ -1,0 +1,17 @@
+.botd-container {
+    display: flex;
+    justify-content: center;
+    padding: 16px;
+  }
+  
+  .botd-card {
+    max-width: 600px;
+    width: 100%;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .botd-card:hover {
+    transform: scale(1.02);
+  }
+  

@@ -1,0 +1,91 @@
+<div class="order-container">
+    <mat-card class="order-card">
+      <header class="order-header">
+        <h1 class="order-title">Order Fresh Coffee Beans</h1>
+        <mat-divider></mat-divider>
+      </header>
+      <form [formGroup]="orderForm" (ngSubmit)="submitOrder()" class="order-form">
+        <!-- Coffee Bean Selection -->
+        <section class="order-section">
+          <h2 class="section-title">Choose Your Beans</h2>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Select Coffee Bean</mat-label>
+            <mat-select formControlName="beanId" required>
+              <mat-option *ngFor="let bean of beans" [value]="bean._id">
+                <div class="bean-option">
+                  <span class="bean-name">{{ bean.Name }}</span>
+                  <span class="bean-origin">({{ bean.Country }})</span>
+                  <span class="bean-price">{{ bean.Cost  }}</span>
+                </div>
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="orderForm.get('beanId')?.invalid">
+              Please select a coffee bean
+            </mat-error>
+          </mat-form-field>
+
+        </section>
+  
+        <!-- Quantity Input -->
+        <section class="order-section">
+          <h2 class="section-title">Select Quantity</h2>
+          <mat-form-field class="full-width">
+            <mat-label>Bags (250g each)</mat-label>
+            <input matInput type="number" formControlName="quantity" min="1" required>
+            <mat-icon matPrefix>shopping_bag</mat-icon>
+            <mat-error *ngIf="orderForm.get('quantity')?.invalid">
+              <mat-icon>error</mat-icon>
+              Minimum 1 bag required
+            </mat-error>
+          </mat-form-field>
+        </section>
+  
+        <!-- Customer Details -->
+        <section class="order-section">
+          <h2 class="section-title">Your Details</h2>
+          <div class="details-grid">
+            <mat-form-field>
+              <mat-label>Full Name</mat-label>
+              <input matInput formControlName="customerName" required>
+              <mat-icon matPrefix>person</mat-icon>
+              <mat-error *ngIf="orderForm.get('customerName')?.invalid">
+                <mat-icon>error</mat-icon>
+                Name is required
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field >
+              <mat-label>Delivery Address</mat-label>
+              <textarea matInput formControlName="address" required rows="1"></textarea>
+              <mat-icon matPrefix>location_on</mat-icon>
+              <mat-error *ngIf="orderForm.get('address')?.invalid">
+                <mat-icon>error</mat-icon>
+                Address is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </section>
+  
+        <!-- Order Summary -->
+        <section class="order-summary">
+          <div class="summary-item">
+            <span class="summary-label">Selected Blend:</span>
+            <span class="summary-value">{{ selectedBean?.Name || '--' }}</span>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">Total Cost:</span>
+            <span class="summary-value price">{{ calculateTotal()  }}</span>
+          </div>
+        </section>
+  
+        <!-- Submit Button -->
+        <div class="button-container">
+          <button mat-raised-button color="primary" type="submit" 
+                  [disabled]="orderForm.invalid" class="submit-btn">
+            <mat-icon>local_shipping</mat-icon>
+            Confirm Order
+          </button>
+        </div>
+      </form>
+    </mat-card>
+  </div>
+  

@@ -1,0 +1,61 @@
+<!-- coffee-list.component.html -->
+<div class="container">
+    <div class="search-container">
+        <mat-form-field  class="search-field">
+          <mat-label >Search Coffee Beans</mat-label>
+          <input matInput [formControl]="searchControl" 
+                 placeholder="Type to search by name, country or notes">
+          <!-- <mat-icon matSuffix>search</mat-icon> -->
+        </mat-form-field>
+        <div class="results-counter" *ngIf="beans.length">
+          Showing {{ beans.length }} of {{ totalBeans }} beans
+        </div>
+      </div>
+  
+    <div class="loading-shimmer" *ngIf="loading">
+      <div class="shimmer-card" *ngFor="let item of placeholderItems"></div>
+    </div>
+  
+    <mat-grid-list [cols]="gridColumns" gutterSize="16" rowHeight="500px">
+      <mat-grid-tile *ngFor="let bean of beans">
+        <mat-card (click)="viewDetails(bean)" class="bean-card">
+          <div class="card-image-wrapper">
+            <img mat-card-image [src]="bean.Image" alt="{{ bean.Name }}" 
+                 (error)="handleImageError($event)">
+            <div class="origin-chip">
+              <mat-icon>public</mat-icon>
+              <span>{{ bean.Country }}</span>
+            </div>
+          </div>
+          <mat-card-content>
+            <h3 class="bean-name">{{ bean.Name }}</h3>
+            <div class="bean-meta">
+              <div class="meta-item">
+                <mat-icon>local_fire_department</mat-icon>
+                {{ bean.colour || 'Medium' }} Roast
+              </div>
+              <div class="meta-item">
+                <mat-icon>palette</mat-icon>
+                {{ bean.colour }}
+              </div>
+            </div>
+            <p class="bean-description">{{ bean.Description | slice:0:120 }}...</p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-stroked-button color="primary" 
+                    (click)="viewDetails(bean); $event.stopPropagation()">
+              View Details
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </mat-grid-tile>
+    </mat-grid-list>
+  
+    <div class="no-results" *ngIf="!loading && !beans.length">
+      <mat-icon>coffee_maker</mat-icon>
+      <h3>No beans found matching your search</h3>
+      <button mat-raised-button color="primary" (click)="clearSearch()">
+        Clear Search
+      </button>
+    </div>
+  </div>
